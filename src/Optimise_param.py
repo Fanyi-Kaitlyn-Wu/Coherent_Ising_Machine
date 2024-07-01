@@ -4,7 +4,7 @@ from tqdm import tqdm
 import mloop.interfaces as mli
 import mloop.controllers as mlc
 import mloop.visualizations as mlv
-from AHC import *
+from src.AHC import *
 
 def optimize_parameters(J, eps_0_range, r_0_range):
     # Parameter ranges are now passed as arguments
