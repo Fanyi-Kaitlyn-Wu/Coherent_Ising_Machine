@@ -42,7 +42,7 @@ Necessary packages used in the project are listes in environment.yml. They are:
 - [numpy](https://numpy.org/) - A fundamental package for scientific computing in Python.
 - [PyTorch](https://pytorch.org/) - An open source machine learning library used for applications such as computer vision and natural language processing.
 - [Jupyter Notebook](https://jupyter.org/) - An open-source web application that allows you to create and share documents that contain live code, equations, visualizations, and narrative text.
-- [MLOOP](https://github.com/michaelhush/M-LOOP) - A machine learning optimization library for optimizing experimental and computational processes.
+- [MLOOP](https://github.com/michaelhush/M-LOOP) - A machine learning optimization library for optimizing experimental and computational processes. This is used for tuning the parameters.
 
 for generating offline documentation:
 
@@ -74,6 +74,7 @@ spin_config, x_trajectory, t, energy_plot_data, error_var_data, divg, kappa = re
 ```
 
 The output terminal will display the ground state found for Ising model, and the corresponding MAX-CUT energy, as well as the time for reaching the ground state. Also, the figures for the simulation will be generated.
+
 ![Simulation Output]( Figures/MC_spin.png "Simulation Output Example")
 ![Simulation Output]( Figures/MC_error.png "Simulation Output Example")
 ![Simulation Output]( Figures/MC_E.png "Simulation Output Example")
