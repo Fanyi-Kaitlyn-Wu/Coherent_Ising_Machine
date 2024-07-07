@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import mloop.interfaces as mli
 import mloop.controllers as mlc
-from AHC import *
+from src.AHC import *
 
 def optimize_parameters(J, eps_0_range, r_0_range):
     """
