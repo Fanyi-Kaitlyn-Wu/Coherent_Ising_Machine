@@ -19,6 +19,6 @@ dependencies:
   - pip
 
 # To fine tune the hyperparameters, we can use the following code
-  # - pip:
-  #   - mloop
+  - pip:
+    - M-LOOP
     
