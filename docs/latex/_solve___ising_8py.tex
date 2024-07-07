@@ -1,0 +1,117 @@
+\doxysection{/\+Users/kaitlyn/\+DIS/\+Ising-\/\+Machine/\+Thesis/fw385/src/\+Solve\+\_\+\+Ising.py File Reference}
+\hypertarget{_solve___ising_8py}{}\label{_solve___ising_8py}\index{/Users/kaitlyn/DIS/Ising-\/Machine/Thesis/fw385/src/Solve\_Ising.py@{/Users/kaitlyn/DIS/Ising-\/Machine/Thesis/fw385/src/Solve\_Ising.py}}
+
+
+This script performs optimization using the CIM\+\_\+\+AHC\+\_\+\+GPU function.  
+
+
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_solve___ising_8py_ae0482d291436d4bcbb79239136ba6a41}{src.\+Solve\+\_\+\+Ising.\+file\+\_\+path}} = sys.\+argv\mbox{[}1\mbox{]}
+\begin{DoxyCompactList}\small\item\em Read the input file. \end{DoxyCompactList}\item 
+\Hypertarget{_solve___ising_8py_a348c84fdc1489c334adb65f96ecf4a4d}\label{_solve___ising_8py_a348c84fdc1489c334adb65f96ecf4a4d} 
+{\bfseries src.\+Solve\+\_\+\+Ising.\+J} = -\/np.\+load(\mbox{\hyperlink{_solve___ising_8py_ae0482d291436d4bcbb79239136ba6a41}{file\+\_\+path}})
+\item 
+\Hypertarget{_solve___ising_8py_a09fbf1d80c7ecfb3234970f5c815c8e6}\label{_solve___ising_8py_a09fbf1d80c7ecfb3234970f5c815c8e6} 
+float {\bfseries src.\+Solve\+\_\+\+Ising.\+eps\+\_\+0} = 0.\+2
+\item 
+\Hypertarget{_solve___ising_8py_ab2a315cf78f2c2e7ee5af8d1ac187bc3}\label{_solve___ising_8py_ab2a315cf78f2c2e7ee5af8d1ac187bc3} 
+float {\bfseries src.\+Solve\+\_\+\+Ising.\+r\+\_\+0} = 0.\+07
+\item 
+\mbox{\hyperlink{_solve___ising_8py_afc5a28fc64436ee35673e9a094e5f88c}{src.\+Solve\+\_\+\+Ising.\+results}}
+\begin{DoxyCompactList}\small\item\em Perform optimization using CIM\+\_\+\+AHC\+\_\+\+GPU. \end{DoxyCompactList}\item 
+\Hypertarget{_solve___ising_8py_abcbd53997ea5d78ce1bfcbe4ff7b44fc}\label{_solve___ising_8py_abcbd53997ea5d78ce1bfcbe4ff7b44fc} 
+{\bfseries src.\+Solve\+\_\+\+Ising.\+spin\+\_\+config}
+\item 
+\Hypertarget{_solve___ising_8py_afdcc3374448fccd1bea3a3a65fa650e8}\label{_solve___ising_8py_afdcc3374448fccd1bea3a3a65fa650e8} 
+{\bfseries src.\+Solve\+\_\+\+Ising.\+x\+\_\+trajectory}
+\item 
+\Hypertarget{_solve___ising_8py_acba006476ba0a147c3cfd5821994552c}\label{_solve___ising_8py_acba006476ba0a147c3cfd5821994552c} 
+{\bfseries src.\+Solve\+\_\+\+Ising.\+t}
+\item 
+\Hypertarget{_solve___ising_8py_a279a0a99bacc407283cd1b3951534e73}\label{_solve___ising_8py_a279a0a99bacc407283cd1b3951534e73} 
+{\bfseries src.\+Solve\+\_\+\+Ising.\+energy\+\_\+plot\+\_\+data}
+\item 
+\Hypertarget{_solve___ising_8py_a5816e215a7a094845898a6c6a869a56c}\label{_solve___ising_8py_a5816e215a7a094845898a6c6a869a56c} 
+{\bfseries src.\+Solve\+\_\+\+Ising.\+error\+\_\+var\+\_\+data}
+\item 
+\Hypertarget{_solve___ising_8py_a5719b2ae57a413c704b48bb268215f64}\label{_solve___ising_8py_a5719b2ae57a413c704b48bb268215f64} 
+{\bfseries src.\+Solve\+\_\+\+Ising.\+divg}
+\item 
+\Hypertarget{_solve___ising_8py_a988cbd4520449cbd99930c06549dc951}\label{_solve___ising_8py_a988cbd4520449cbd99930c06549dc951} 
+{\bfseries src.\+Solve\+\_\+\+Ising.\+kappa}
+\item 
+\Hypertarget{_solve___ising_8py_af3b8b81da16784055e3232bd93d6081f}\label{_solve___ising_8py_af3b8b81da16784055e3232bd93d6081f} 
+{\bfseries src.\+Solve\+\_\+\+Ising.\+energy\+\_\+trace} = energy\+\_\+plot\+\_\+data\mbox{[}0\mbox{]}
+\item 
+\Hypertarget{_solve___ising_8py_aad509f6cd9b39cb3d548221f013a712a}\label{_solve___ising_8py_aad509f6cd9b39cb3d548221f013a712a} 
+{\bfseries src.\+Solve\+\_\+\+Ising.\+min\+\_\+energy} = np.\+min(energy\+\_\+trace)
+\item 
+\Hypertarget{_solve___ising_8py_a182b2b75b8c48374af24d9b3bce612c7}\label{_solve___ising_8py_a182b2b75b8c48374af24d9b3bce612c7} 
+{\bfseries src.\+Solve\+\_\+\+Ising.\+maxcut\+\_\+energy} = \mbox{\hyperlink{_a_h_c_8py_a8d0f0dee51efc46c1ae55929b504f903}{calculate\+\_\+maxcut\+\_\+energy}}(min\+\_\+energy, J)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This script performs optimization using the CIM\+\_\+\+AHC\+\_\+\+GPU function. 
+
+It reads a matrix from a file and uses it as an input for the optimization algorithm.
+
+Optimization using CIM\+\_\+\+AHC\+\_\+\+GPU with a provided J matrix. 
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{_solve___ising_8py_ae0482d291436d4bcbb79239136ba6a41}\label{_solve___ising_8py_ae0482d291436d4bcbb79239136ba6a41} 
+\index{Solve\_Ising.py@{Solve\_Ising.py}!file\_path@{file\_path}}
+\index{file\_path@{file\_path}!Solve\_Ising.py@{Solve\_Ising.py}}
+\doxysubsubsection{\texorpdfstring{file\_path}{file\_path}}
+{\footnotesize\ttfamily src.\+Solve\+\_\+\+Ising.\+file\+\_\+path = sys.\+argv\mbox{[}1\mbox{]}}
+
+
+
+Read the input file. 
+
+The path of the file is taken from the command line argument. The file is expected to contain a numpy array which represents the J matrix for the optimization process.
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+\_\+path} & Command line argument that specifies the input file path. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_solve___ising_8py_afc5a28fc64436ee35673e9a094e5f88c}\label{_solve___ising_8py_afc5a28fc64436ee35673e9a094e5f88c} 
+\index{Solve\_Ising.py@{Solve\_Ising.py}!results@{results}}
+\index{results@{results}!Solve\_Ising.py@{Solve\_Ising.py}}
+\doxysubsubsection{\texorpdfstring{results}{results}}
+{\footnotesize\ttfamily src.\+Solve\+\_\+\+Ising.\+results}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ =\ \ CIM\_AHC\_GPU(T\_time=20,\ }
+\DoxyCodeLine{00002\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ J=J,\ }
+\DoxyCodeLine{00003\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ batch\_size=1,\ }
+\DoxyCodeLine{00004\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ time\_step=0.01,\ }
+\DoxyCodeLine{00005\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ custom\_fb\_schedule=\textcolor{keywordtype}{None},\ }
+\DoxyCodeLine{00006\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ custom\_pump\_schedule=\textcolor{keywordtype}{None})}
+
+\end{DoxyCode}
+
+
+Perform optimization using CIM\+\_\+\+AHC\+\_\+\+GPU. 
+
+The function CIM\+\_\+\+AHC\+\_\+\+GPU is called with specified parameters. The results of the optimization are stored in the variable \textquotesingle{}results\textquotesingle{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+\_\+time} & Total time for the CIM optimization process. \\
+\hline
+{\em J} & J matrix used in the optimization. \\
+\hline
+{\em batch\+\_\+size} & The size of batches used in the optimization. \\
+\hline
+{\em time\+\_\+step} & Time step size for the optimization. \\
+\hline
+{\em custom\+\_\+fb\+\_\+schedule} & Custom feedback schedule (if any). \\
+\hline
+{\em custom\+\_\+pump\+\_\+schedule} & Custom pump schedule (if any). \\
+\hline
+\end{DoxyParams}

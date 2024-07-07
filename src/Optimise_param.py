@@ -1,12 +1,40 @@
+"""!@file cim_optimization.py
+@brief Module for optimizing Coherent Ising Machine (CIM) parameters.
+
+@details This module contains functions and classes for optimizing the parameters of a Coherent Ising Machine (CIM) 
+with Adaptive Heuristic Correction (AHC). It includes:
+
+- A grid search optimization function that explores different combinations of epsilon_0 and r_0 parameters.
+- A visualization of the optimization results using contour plots.
+- An implementation of the M-LOOP (Machine Learning Online Optimization) interface for CIM parameter optimization.
+- A function to run M-LOOP optimization on CIM parameters.
+
+The module uses numpy for numerical computations, matplotlib for visualization, tqdm for progress bars, 
+and the M-LOOP library for advanced optimization techniques.
+
+@note This module assumes the existence of a separate 'AHC' module containing the CIM_AHC_GPU function 
+and related utilities.
+
+@author F.Wu
+@date 30/June/2024
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import mloop.interfaces as mli
 import mloop.controllers as mlc
-import mloop.visualizations as mlv
-from src.AHC import *
+from AHC import *
 
 def optimize_parameters(J, eps_0_range, r_0_range):
+    """
+    @brief Perform grid search optimization for CIM parameters.
+
+    @param J The Ising model coupling matrix.
+    @param eps_0_range Range of epsilon_0 values to search.
+    @param r_0_range Range of r_0 values to search.
+    @return None, but prints best parameters and energy, and displays a contour plot.
+    """
     # Parameter ranges are now passed as arguments
     best_energy = float('inf')
     best_params = {}
@@ -54,11 +82,25 @@ if __name__ == '__main__':
 
 
 class CIMInterface(mli.Interface):
+    """
+    @brief M-LOOP interface for CIM optimization.
+    """
     def __init__(self, J_matrix):
+        """
+        @brief Initialize the CIMInterface.
+
+        @param J_matrix The Ising model coupling matrix.
+        """
         super(CIMInterface, self).__init__()
         self.J_matrix = J_matrix
 
     def get_next_cost_dict(self, params_dict):
+        """
+        @brief Compute the cost for given parameters.
+
+        @param params_dict Dictionary containing the parameters to evaluate.
+        @return Dictionary with the computed cost and uncertainty.
+        """
         eps_0 = params_dict['params'][0]
         r_0 = params_dict['params'][1]
         result = CIM_AHC_GPU(
@@ -71,12 +113,22 @@ class CIMInterface(mli.Interface):
         )
         final_energy = result[3].min() 
         return {'cost': final_energy, 'uncertainty': 0.1}
-def mloop_optimize(J_matrix, min_boundary, max_boundary):
+    
+def mloop_optimize(J_matrix, min_boundary, max_boundary,max_num_runs=100):
+    """
+    @brief Perform M-LOOP optimization for CIM parameters.
+
+    @param J_matrix The Ising model coupling matrix.
+    @param min_boundary List of minimum values for parameters.
+    @param max_boundary List of maximum values for parameters.
+    @param max_num_runs Maximum number of optimization runs.
+    @return The M-LOOP controller object after optimization.
+    """
     interface = CIMInterface(J_matrix)
     controller = mlc.create_controller(
         interface=interface,
         controller_type='gaussian_process',
-        max_num_runs=100,  
+        max_num_runs=max_num_runs,  
         num_params=2,
         param_names=['eps_0', 'r_0'],
         min_boundary=min_boundary,

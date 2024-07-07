@@ -1,33 +1,95 @@
+"""!@file AHC.py
+@brief Module implementing a Coherent Ising Machine with Amplitude Heterogenuity Correction (CIM-AHC) on GPU.
+
+@details This module contains functions for simulating and analyzing a Coherent Ising Machine (CIM) 
+with Adaptive Heuristic Correction (AHC) using GPU acceleration. It includes implementations of:
+- Linear time scheduling
+- Custom feedback and pump scheduling
+- Divergence computation
+- Max-Cut energy calculation
+- The main CIM-AHC simulation function
+- Result plotting utilities
+
+The CIM-AHC algorithm is designed to solve Ising model problems and can be applied to various 
+optimization tasks, including Max-Cut problems. The implementation uses PyTorch for GPU acceleration 
+and supports batch processing for parallel simulations.
+
+@author F.Wu
+@date 30/June/2024
+"""
+
 import torch
 import numpy as np
 
 def linear_time_schedule(initial_value, ticks, time_step):
+    """
+    @brief Generate a linear time schedule.
+
+    @param initial_value The starting value of the schedule.
+    @param ticks The number of time steps.
+    @param time_step The size of each time step.
+    @return A tensor representing the linear time schedule.
+    """
     return initial_value * torch.arange(0, ticks * time_step, time_step)
 
 def custom_fb_schedule(ticks, time_step, eps_0=0.07):
+    """
+    @brief Create a custom feedback schedule.
+
+    @param ticks The number of time steps.
+    @param time_step The size of each time step.
+    @param eps_0 The initial epsilon value (default: 0.07).
+    @return A tensor representing the custom feedback schedule.
+    """
     return linear_time_schedule(eps_0, ticks, time_step)
 
 def custom_pump_schedule(ticks, time_step, r_0=0.2):
+    """
+    @brief Create a custom pump schedule.
+
+    @param ticks The number of time steps.
+    @param time_step The size of each time step.
+    @param r_0 The initial pump rate (default: 0.2).
+    @return A tensor representing the custom pump schedule.
+    """
     return linear_time_schedule(r_0, ticks, time_step)
 
 def e_0(t, beta, p, a):
+    """
+    @brief Calculate e_0 values.
+
+    @param t Time values.
+    @param beta Beta parameter.
+    @param p Pump parameter.
+    @param a Target amplitude.
+    @return A tensor of e_0 values.
+    """
     integral = torch.cumsum((-1 + p - a) * t, dim=0)
     return torch.exp(-beta * integral)
 
 def compute_divg(N, beta, p, a, eps, H_t, e_0_t):
+    """
+    @brief Compute divergence.
+
+    @param N Number of spins.
+    @param beta Beta parameter.
+    @param p Pump parameter.
+    @param a Target amplitude.
+    @param eps Epsilon value.
+    @param H_t Current Hamiltonian.
+    @param e_0_t Current e_0 value.
+    @return The computed divergence.
+    """
     divg = beta * (N * (1 - p + a) + 2 * eps * e_0_t * H_t )#+ (e_0_t**2 * eps**2) / (p - 1))
     return divg
 
 def calculate_maxcut_energy(E, J):
     """
-    Calculate the Max-Cut value from the Ising model energy and interaction matrix.
+    @brief Calculate the Max-Cut value from the Ising model energy and interaction matrix.
 
-    Parameters:
-    E (float): Ising model energy.
-    J (numpy.ndarray): Interaction matrix where J[i][j] represents the weight of the edge between nodes i and j.
-
-    Returns:
-    float: Max-Cut value.
+    @param E Ising model energy.
+    @param J Interaction matrix where J[i][j] represents the weight of the edge between nodes i and j.
+    @return The Max-Cut value.
     """
     # Ensure J is a numpy array
     J = np.array(J)
@@ -38,11 +100,28 @@ def calculate_maxcut_energy(E, J):
     # Calculate the Max-Cut value
     maxcut_value = 0.5 * (total_interaction_strength + E)
     
-    return maxcut_value
+    return -maxcut_value
 
 torch.backends.cudnn.benchmark = True
 
 def CIM_AHC_GPU(T_time, J, batch_size=1, time_step=0.05, beta=0.05, mu=0.5, noise=0, custom_fb_schedule=None, custom_pump_schedule=None, random_number_function=None, ahc_nonlinearity=None, device=torch.device('cpu')):
+    """
+    @brief Coherent Ising Machine with Adaptive Heuristic Correction (CIM-AHC) implementation on GPU.
+
+    @param T_time Total simulation time.
+    @param J Ising problem matrix.
+    @param batch_size Number of parallel simulations (default: 1).
+    @param time_step Size of each time step (default: 0.05).
+    @param beta Beta parameter (default: 0.05).
+    @param mu Mu parameter (default: 0.5).
+    @param noise Noise level (default: 0).
+    @param custom_fb_schedule Custom feedback schedule function (default: None).
+    @param custom_pump_schedule Custom pump schedule function (default: None).
+    @param random_number_function Custom random number generation function (default: None).
+    @param ahc_nonlinearity Custom nonlinearity function for AHC (default: None).
+    @param device Torch device to use for computations (default: CPU).
+    @return Tuple containing final spin configuration, spin amplitude trajectory, simulation time, energy plot data, error variance data, divergence plot data, and kappa value.
+    """
     # Compute instance sizes, cast Ising problem matrix to torch tensor.
     J = torch.from_numpy(J).float().to(device)
     N = J.size(1)
@@ -145,3 +224,53 @@ def CIM_AHC_GPU(T_time, J, batch_size=1, time_step=0.05, beta=0.05, mu=0.5, nois
     sig_opt = sig_opt.cpu()
 
     return (sig_opt.numpy(), spin_amplitude_trajectory.numpy(), t, energy_plot_data.numpy(), error_var_data.numpy(), divg_plot_data.numpy(), kappa)
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def plot_results(results):
+    """
+    @brief Plot the results of the CIM-AHC simulation.
+
+    @param results Tuple containing the results from CIM_AHC_GPU function.
+    """
+    spin_config, x_trajectory, t, energy_plot_data, error_var_data, divg, kappa = results
+    
+    # Plotting the error over time
+    plt.figure(figsize=(5, 3))
+    plt.plot(error_var_data[0][0])
+    plt.xlabel('Time Steps')
+    plt.ylabel('Error')
+    plt.tight_layout()
+    plt.show()
+
+    # Plotting spin amplitude for each of the first 50 spins
+    plt.figure(figsize=(5, 3))
+    for spin_index in range(50):
+        plt.plot(np.arange(t+1), x_trajectory[0, spin_index, :])
+    plt.xlabel('Time Steps')
+    plt.ylabel('Spin Amplitude')
+    plt.tight_layout()
+    plt.show()
+
+    energy_trace = energy_plot_data[0]
+    min_energy = np.min(energy_trace)
+    # Find the index of the first occurrence of the minimum energy
+    first_min_index = np.where(energy_trace == min_energy)[0][0]
+
+    threshold = 10  # Define a small threshold value
+    period = 5  # Period to check for stability
+    if all(abs(energy_trace[first_min_index + i] - min_energy) < threshold for i in range(period)):
+        print("Energy reaches a steady state at:", first_min_index)
+    else:
+        print("Energy reaches the lowest value at:", first_min_index, "but doesn't remain stable for the next", period, "steps.")
+
+    # Plotting the point where energy reaches steady state
+    plt.figure(figsize=(5, 3))
+    plt.plot(energy_trace, label=f'Ground state = {min_energy:.0f}')
+    plt.scatter(first_min_index, min_energy, color='red')  # Mark the steady state point
+    plt.xlabel('Time Steps')
+    plt.ylabel('Energy')
+    plt.legend()
+    plt.tight_layout()
+    plt.show()

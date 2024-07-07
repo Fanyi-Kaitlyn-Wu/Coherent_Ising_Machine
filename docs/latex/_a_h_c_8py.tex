@@ -1,0 +1,173 @@
+\doxysection{/\+Users/kaitlyn/\+DIS/\+Ising-\/\+Machine/\+Thesis/fw385/src/\+AHC.py File Reference}
+\hypertarget{_a_h_c_8py}{}\label{_a_h_c_8py}\index{/Users/kaitlyn/DIS/Ising-\/Machine/Thesis/fw385/src/AHC.py@{/Users/kaitlyn/DIS/Ising-\/Machine/Thesis/fw385/src/AHC.py}}
+
+
+Module implementing a Coherent Ising Machine with Amplitude Heterogenuity Correction (CIM-\/\+AHC) on GPU.  
+
+
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_a_h_c_8py_a60f026d92e1d1b514f07bab74e106518}{src.\+AHC.\+linear\+\_\+time\+\_\+schedule}} (initial\+\_\+value, ticks, time\+\_\+step)
+\item 
+\mbox{\hyperlink{_a_h_c_8py_a373c7d7195e9b1a186f088510abc9c76}{src.\+AHC.\+custom\+\_\+fb\+\_\+schedule}} (ticks, time\+\_\+step, eps\+\_\+0=0.\+07)
+\item 
+\mbox{\hyperlink{_a_h_c_8py_afc9487ba2efd879ae037512c6f113442}{src.\+AHC.\+custom\+\_\+pump\+\_\+schedule}} (ticks, time\+\_\+step, r\+\_\+0=0.\+2)
+\item 
+\mbox{\hyperlink{_a_h_c_8py_a10b66647cfe419be08fd5bd0710cd663}{src.\+AHC.\+e\+\_\+0}} (t, beta, p, a)
+\item 
+\mbox{\hyperlink{_a_h_c_8py_ab68dd9c3ca754b5b50005659d7ba2fff}{src.\+AHC.\+compute\+\_\+divg}} (N, beta, p, a, eps, H\+\_\+t, e\+\_\+0\+\_\+t)
+\item 
+\mbox{\hyperlink{_a_h_c_8py_a8d0f0dee51efc46c1ae55929b504f903}{src.\+AHC.\+calculate\+\_\+maxcut\+\_\+energy}} (E, J)
+\item 
+\mbox{\hyperlink{_a_h_c_8py_a34dfcbdf8e02ae7cf0d01a73b41bdbe7}{src.\+AHC.\+CIM\+\_\+\+AHC\+\_\+\+GPU}} (T\+\_\+time, J, batch\+\_\+size=1, time\+\_\+step=0.\+05, beta=0.\+05, mu=0.\+5, noise=0, \mbox{\hyperlink{_a_h_c_8py_a373c7d7195e9b1a186f088510abc9c76}{custom\+\_\+fb\+\_\+schedule}}=None, \mbox{\hyperlink{_a_h_c_8py_afc9487ba2efd879ae037512c6f113442}{custom\+\_\+pump\+\_\+schedule}}=None, random\+\_\+number\+\_\+function=None, ahc\+\_\+nonlinearity=None, device=torch.\+device(\textquotesingle{}cpu\textquotesingle{}))
+\item 
+\mbox{\hyperlink{_a_h_c_8py_ad9410fec9abe15b3531ee1934eec6b03}{src.\+AHC.\+plot\+\_\+results}} (results)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{_a_h_c_8py_af8b1ef8d568e9f14e4a6de0992ce88c2}\label{_a_h_c_8py_af8b1ef8d568e9f14e4a6de0992ce88c2} 
+{\bfseries src.\+AHC.\+benchmark}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Module implementing a Coherent Ising Machine with Amplitude Heterogenuity Correction (CIM-\/\+AHC) on GPU. 
+
+This module contains functions for simulating and analyzing a Coherent Ising Machine (CIM) with Adaptive Heuristic Correction (AHC) using GPU acceleration. It includes implementations of\+:
+\begin{DoxyItemize}
+\item Linear time scheduling
+\item Custom feedback and pump scheduling
+\item Divergence computation
+\item Max-\/\+Cut energy calculation
+\item The main CIM-\/\+AHC simulation function
+\item Result plotting utilities
+\end{DoxyItemize}
+
+The CIM-\/\+AHC algorithm is designed to solve Ising model problems and can be applied to various optimization tasks, including Max-\/\+Cut problems. The implementation uses Py\+Torch for GPU acceleration and supports batch processing for parallel simulations.
+
+\begin{DoxyAuthor}{Author}
+F.\+Wu 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+30/\+June/2024 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{_a_h_c_8py_a8d0f0dee51efc46c1ae55929b504f903}\label{_a_h_c_8py_a8d0f0dee51efc46c1ae55929b504f903} 
+\index{AHC.py@{AHC.py}!calculate\_maxcut\_energy@{calculate\_maxcut\_energy}}
+\index{calculate\_maxcut\_energy@{calculate\_maxcut\_energy}!AHC.py@{AHC.py}}
+\doxysubsubsection{\texorpdfstring{calculate\_maxcut\_energy()}{calculate\_maxcut\_energy()}}
+{\footnotesize\ttfamily src.\+AHC.\+calculate\+\_\+maxcut\+\_\+energy (\begin{DoxyParamCaption}\item[{}]{E,  }\item[{}]{J }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Calculate the Max-Cut value from the Ising model energy and interaction matrix.
+
+@param E Ising model energy.
+@param J Interaction matrix where J[i][j] represents the weight of the edge between nodes i and j.
+@return The Max-Cut value.
+\end{DoxyVerb}
+ \Hypertarget{_a_h_c_8py_a34dfcbdf8e02ae7cf0d01a73b41bdbe7}\label{_a_h_c_8py_a34dfcbdf8e02ae7cf0d01a73b41bdbe7} 
+\index{AHC.py@{AHC.py}!CIM\_AHC\_GPU@{CIM\_AHC\_GPU}}
+\index{CIM\_AHC\_GPU@{CIM\_AHC\_GPU}!AHC.py@{AHC.py}}
+\doxysubsubsection{\texorpdfstring{CIM\_AHC\_GPU()}{CIM\_AHC\_GPU()}}
+{\footnotesize\ttfamily src.\+AHC.\+CIM\+\_\+\+AHC\+\_\+\+GPU (\begin{DoxyParamCaption}\item[{}]{T\+\_\+time,  }\item[{}]{J,  }\item[{}]{batch\+\_\+size = {\ttfamily 1},  }\item[{}]{time\+\_\+step = {\ttfamily 0.05},  }\item[{}]{beta = {\ttfamily 0.05},  }\item[{}]{mu = {\ttfamily 0.5},  }\item[{}]{noise = {\ttfamily 0},  }\item[{}]{custom\+\_\+fb\+\_\+schedule = {\ttfamily None},  }\item[{}]{custom\+\_\+pump\+\_\+schedule = {\ttfamily None},  }\item[{}]{random\+\_\+number\+\_\+function = {\ttfamily None},  }\item[{}]{ahc\+\_\+nonlinearity = {\ttfamily None},  }\item[{}]{device = {\ttfamily torch.device(\textquotesingle{}cpu\textquotesingle{})} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Coherent Ising Machine with Adaptive Heuristic Correction (CIM-AHC) implementation on GPU.
+
+@param T_time Total simulation time.
+@param J Ising problem matrix.
+@param batch_size Number of parallel simulations (default: 1).
+@param time_step Size of each time step (default: 0.05).
+@param beta Beta parameter (default: 0.05).
+@param mu Mu parameter (default: 0.5).
+@param noise Noise level (default: 0).
+@param custom_fb_schedule Custom feedback schedule function (default: None).
+@param custom_pump_schedule Custom pump schedule function (default: None).
+@param random_number_function Custom random number generation function (default: None).
+@param ahc_nonlinearity Custom nonlinearity function for AHC (default: None).
+@param device Torch device to use for computations (default: CPU).
+@return Tuple containing final spin configuration, spin amplitude trajectory, simulation time, energy plot data, error variance data, divergence plot data, and kappa value.
+\end{DoxyVerb}
+ \Hypertarget{_a_h_c_8py_ab68dd9c3ca754b5b50005659d7ba2fff}\label{_a_h_c_8py_ab68dd9c3ca754b5b50005659d7ba2fff} 
+\index{AHC.py@{AHC.py}!compute\_divg@{compute\_divg}}
+\index{compute\_divg@{compute\_divg}!AHC.py@{AHC.py}}
+\doxysubsubsection{\texorpdfstring{compute\_divg()}{compute\_divg()}}
+{\footnotesize\ttfamily src.\+AHC.\+compute\+\_\+divg (\begin{DoxyParamCaption}\item[{}]{N,  }\item[{}]{beta,  }\item[{}]{p,  }\item[{}]{a,  }\item[{}]{eps,  }\item[{}]{H\+\_\+t,  }\item[{}]{e\+\_\+0\+\_\+t }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Compute divergence.
+
+@param N Number of spins.
+@param beta Beta parameter.
+@param p Pump parameter.
+@param a Target amplitude.
+@param eps Epsilon value.
+@param H_t Current Hamiltonian.
+@param e_0_t Current e_0 value.
+@return The computed divergence.
+\end{DoxyVerb}
+ \Hypertarget{_a_h_c_8py_a373c7d7195e9b1a186f088510abc9c76}\label{_a_h_c_8py_a373c7d7195e9b1a186f088510abc9c76} 
+\index{AHC.py@{AHC.py}!custom\_fb\_schedule@{custom\_fb\_schedule}}
+\index{custom\_fb\_schedule@{custom\_fb\_schedule}!AHC.py@{AHC.py}}
+\doxysubsubsection{\texorpdfstring{custom\_fb\_schedule()}{custom\_fb\_schedule()}}
+{\footnotesize\ttfamily src.\+AHC.\+custom\+\_\+fb\+\_\+schedule (\begin{DoxyParamCaption}\item[{}]{ticks,  }\item[{}]{time\+\_\+step,  }\item[{}]{eps\+\_\+0 = {\ttfamily 0.07} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Create a custom feedback schedule.
+
+@param ticks The number of time steps.
+@param time_step The size of each time step.
+@param eps_0 The initial epsilon value (default: 0.07).
+@return A tensor representing the custom feedback schedule.
+\end{DoxyVerb}
+ \Hypertarget{_a_h_c_8py_afc9487ba2efd879ae037512c6f113442}\label{_a_h_c_8py_afc9487ba2efd879ae037512c6f113442} 
+\index{AHC.py@{AHC.py}!custom\_pump\_schedule@{custom\_pump\_schedule}}
+\index{custom\_pump\_schedule@{custom\_pump\_schedule}!AHC.py@{AHC.py}}
+\doxysubsubsection{\texorpdfstring{custom\_pump\_schedule()}{custom\_pump\_schedule()}}
+{\footnotesize\ttfamily src.\+AHC.\+custom\+\_\+pump\+\_\+schedule (\begin{DoxyParamCaption}\item[{}]{ticks,  }\item[{}]{time\+\_\+step,  }\item[{}]{r\+\_\+0 = {\ttfamily 0.2} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Create a custom pump schedule.
+
+@param ticks The number of time steps.
+@param time_step The size of each time step.
+@param r_0 The initial pump rate (default: 0.2).
+@return A tensor representing the custom pump schedule.
+\end{DoxyVerb}
+ \Hypertarget{_a_h_c_8py_a10b66647cfe419be08fd5bd0710cd663}\label{_a_h_c_8py_a10b66647cfe419be08fd5bd0710cd663} 
+\index{AHC.py@{AHC.py}!e\_0@{e\_0}}
+\index{e\_0@{e\_0}!AHC.py@{AHC.py}}
+\doxysubsubsection{\texorpdfstring{e\_0()}{e\_0()}}
+{\footnotesize\ttfamily src.\+AHC.\+e\+\_\+0 (\begin{DoxyParamCaption}\item[{}]{t,  }\item[{}]{beta,  }\item[{}]{p,  }\item[{}]{a }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Calculate e_0 values.
+
+@param t Time values.
+@param beta Beta parameter.
+@param p Pump parameter.
+@param a Target amplitude.
+@return A tensor of e_0 values.
+\end{DoxyVerb}
+ \Hypertarget{_a_h_c_8py_a60f026d92e1d1b514f07bab74e106518}\label{_a_h_c_8py_a60f026d92e1d1b514f07bab74e106518} 
+\index{AHC.py@{AHC.py}!linear\_time\_schedule@{linear\_time\_schedule}}
+\index{linear\_time\_schedule@{linear\_time\_schedule}!AHC.py@{AHC.py}}
+\doxysubsubsection{\texorpdfstring{linear\_time\_schedule()}{linear\_time\_schedule()}}
+{\footnotesize\ttfamily src.\+AHC.\+linear\+\_\+time\+\_\+schedule (\begin{DoxyParamCaption}\item[{}]{initial\+\_\+value,  }\item[{}]{ticks,  }\item[{}]{time\+\_\+step }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Generate a linear time schedule.
+
+@param initial_value The starting value of the schedule.
+@param ticks The number of time steps.
+@param time_step The size of each time step.
+@return A tensor representing the linear time schedule.
+\end{DoxyVerb}
+ \Hypertarget{_a_h_c_8py_ad9410fec9abe15b3531ee1934eec6b03}\label{_a_h_c_8py_ad9410fec9abe15b3531ee1934eec6b03} 
+\index{AHC.py@{AHC.py}!plot\_results@{plot\_results}}
+\index{plot\_results@{plot\_results}!AHC.py@{AHC.py}}
+\doxysubsubsection{\texorpdfstring{plot\_results()}{plot\_results()}}
+{\footnotesize\ttfamily src.\+AHC.\+plot\+\_\+results (\begin{DoxyParamCaption}\item[{}]{results }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Plot the results of the CIM-AHC simulation.
+
+@param results Tuple containing the results from CIM_AHC_GPU function.
+\end{DoxyVerb}
+ 

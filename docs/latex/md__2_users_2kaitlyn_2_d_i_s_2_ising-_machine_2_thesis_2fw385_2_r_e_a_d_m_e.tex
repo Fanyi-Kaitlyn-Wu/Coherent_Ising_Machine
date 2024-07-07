@@ -1,0 +1,225 @@
+\chapter{Chaotic Amplitude Control for Coherent Ising Machine}
+\hypertarget{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e}{}\label{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e}\index{Chaotic Amplitude Control for Coherent Ising Machine@{Chaotic Amplitude Control for Coherent Ising Machine}}
+\label{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md0}%
+ \hypertarget{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md1}{}\doxysection{\texorpdfstring{Description \& Motivation}{Description \& Motivation}}\label{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md1}
+The Sudoku Solver is an efficient tool designed to automatically solve Sudoku puzzles in a single command. The project is motivated by the challenge of implementing a complex algorithm in a user-\/friendly application. The development of the Sudoku solver followed a rigorous software development strategy. Morover, caching optimisation was implemented to improve the efficiency of the backtracking algorithm used by the Sudoku solver. For comparison, constrain propagation algrithm was developed and stored in {\bfseries{Constraint\+\_\+\+Propagation}} branch.\hypertarget{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{Contents}{Contents}}\label{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md2}
+
+\begin{DoxyItemize}
+\item Installation
+\item Usage
+\item Features
+\item Frameworks
+\item Credits
+\item Generation Tools
+\item Chat\+GPT and Copiot
+\end{DoxyItemize}\hypertarget{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md3}{}\doxysection{\texorpdfstring{Installation}{Installation}}\label{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md3}
+The project is uploaded in git\+Lab. To install the application, clone the repository\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git\ clone\ https://gitlab.developers.cam.ac.uk/phy/data-\/intensive-\/science-\/mphil/c1\_assessment/fw385.git}
+
+\end{DoxyCode}
+ Navigate to the project directory and install the dependencies.\hypertarget{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{\texorpdfstring{Dependencies}{Dependencies}}\label{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md4}
+This project is written in Python (The project was developed using python=3.\+9.\+18). To run the project, {\bfseries{Python 3}} or later need to be installed. Necessary packages used in the project are listes in environment.\+yml. They are\+:
+
+
+\begin{DoxyItemize}
+\item \href{https://numpy.org/}{\texttt{ numpy}} -\/ A fundamental package for scientific computing in Python.
+\end{DoxyItemize}
+
+for unit tests\+:
+
+
+\begin{DoxyItemize}
+\item \href{https://docs.pytest.org/en/stable/}{\texttt{ pytest}} -\/ A framework for writing small tests for Python code.
+\end{DoxyItemize}
+
+for evaluating solver performances\+:
+
+
+\begin{DoxyItemize}
+\item \href{https://docs.python.org/3/library/profile.html\#module-cProfile}{\texttt{ c\+Profile}} -\/ A profiler for Python programs to analyze performance.
+\item \href{https://pypi.org/project/memory-profiler/}{\texttt{ memory\+\_\+profiler}} -\/ A module for monitoring memory usage of a Python program.
+\end{DoxyItemize}
+
+The time profile and memory profile of the Sudoku solver were save in {\ttfamily Profiles} folder.
+
+for generating offline documentation\+:
+
+
+\begin{DoxyItemize}
+\item \href{http://www.doxygen.nl/}{\texttt{ doxygen}} -\/ A tool for generating documentation from annotated code.
+\end{DoxyItemize}
+
+You can check that things are working by running tests/ (also ran by .pre-\/commit-\/config.\+yaml for continuous integration)\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ pytest\ tests/}
+
+\end{DoxyCode}
+\hypertarget{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md5}{}\doxysection{\texorpdfstring{Usage}{Usage}}\label{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md5}
+To solve a Sudoku puzzle, run the \textquotesingle{}solve\+\_\+sudoku.\+py\textquotesingle{} file in a single command line with the path to the puzzle file as an argument\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ python\ src/solve\_sudoku.py\ input.txt}
+
+\end{DoxyCode}
+ The input.\+txt file should only include one Sudoku puzzle and in the format below\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ cat\ input.txt}
+\DoxyCodeLine{000|007|000}
+\DoxyCodeLine{000|009|504}
+\DoxyCodeLine{000|050|169}
+\DoxyCodeLine{-\/-\/-\/+-\/-\/-\/+-\/-\/-\/}
+\DoxyCodeLine{080|000|305}
+\DoxyCodeLine{075|000|290}
+\DoxyCodeLine{406|000|080}
+\DoxyCodeLine{-\/-\/-\/+-\/-\/-\/+-\/-\/-\/}
+\DoxyCodeLine{762|080|000}
+\DoxyCodeLine{103|900|000}
+\DoxyCodeLine{000|600|000}
+
+\end{DoxyCode}
+
+
+Make sure you are in the project directory when running the command. The solver {\ttfamily solve\+\_\+sudoku.\+py} is inside the {\ttfamily src} folder, and the {\ttfamily input.\+txt} file should in the project directory. The solved puzzle will be saved to {\ttfamily output.\+txt} in the project directory.
+
+The output terminal will display the solved puzzle and the time taken for the solving process\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{solve\_sudoku:\ Puzzle\ solved!}
+\DoxyCodeLine{Validation\ time:\ 0.000095\ seconds}
+\DoxyCodeLine{Find\ empty\ time:\ 0.008957\ seconds}
+\DoxyCodeLine{Total\ time\ for\ backtracking\ algorithm:\ 0.046386\ seconds}
+\DoxyCodeLine{594|167|832}
+\DoxyCodeLine{618|239|574}
+\DoxyCodeLine{237|458|169}
+\DoxyCodeLine{-\/-\/-\/+-\/-\/-\/+-\/-\/-\/}
+\DoxyCodeLine{981|726|345}
+\DoxyCodeLine{375|841|296}
+\DoxyCodeLine{426|395|781}
+\DoxyCodeLine{-\/-\/-\/+-\/-\/-\/+-\/-\/-\/}
+\DoxyCodeLine{762|584|913}
+\DoxyCodeLine{143|972|658}
+\DoxyCodeLine{859|613|427}
+
+\end{DoxyCode}
+ If an invalid or unsolvable puzzle is give to the solver, corresponding and informative error messages will be displayed.
+
+
+\begin{DoxyItemize}
+\item For invalid input grid\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{validate\_grid:\ Grid\ must\ be\ a\ list\ of\ 9\ rows.}
+\DoxyCodeLine{Puzzle\ could\ not\ be\ solved.}
+
+\end{DoxyCode}
+
+\item For unsolvable puzzle\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{validate\_grid:\ Duplicate\ number\ 8\ found\ in\ the\ 3x3\ subgrid\ starting\ at\ (3,\ 6).}
+\DoxyCodeLine{Puzzle\ could\ not\ be\ solved.}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}\hypertarget{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md6}{}\doxysection{\texorpdfstring{Features}{Features}}\label{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md6}
+
+\begin{DoxyItemize}
+\item {\bfseries{Puzzle Solving}}\+: Solves standard 9x9 Sudoku puzzles.
+\item {\bfseries{File I/O}}\+: Reads puzzles from and writes solutions to text files. Both of the .txt files are in the project directory and have the same format of Sudoku grid.
+\item {\bfseries{Efficiency Evaluation}}\+: Measures and displays the time taken for key steps (validating the grid, finding empty cells and the main solver) in the solving process.
+\item {\bfseries{CLI Interface}}\+: Offers a simple command-\/line interface for ease of use.
+\end{DoxyItemize}\hypertarget{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md7}{}\doxysection{\texorpdfstring{Frameworks}{Frameworks}}\label{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md7}
+
+\begin{DoxyItemize}
+\item {\bfseries{Language}}\+: Python 3.\+9.\+18
+\item {\bfseries{Testing}}\+: Py\+Test for unit tests (in {\ttfamily tests} folder\+: {\ttfamily test\+\_\+check\+\_\+input.\+py}, {\ttfamily test\+\_\+find\+\_\+empty.\+py}, {\ttfamily test\+\_\+is\+\_\+valid.\+py}) 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ pytest\ tests/}
+
+\end{DoxyCode}
+
+\item {\bfseries{CI}}\+: Git\+Hub Actions for continuous integration and automated pytest (unit test) before each commit. The {\ttfamily pre-\/commit-\/config.\+yaml} file was employed to automate checks before committing changes.
+\item {\bfseries{Containerisation}}\+: Docker was used for reproducing the project. Key configurations include continuumio/miniconda3 as the base image for a Miniconda-\/based Python environment. It sets /usr/\+Sudoku\+Solver as the working directory, and copies all project files into the container. The environment is set up by executing conda env update using the {\ttfamily environment.\+yml} file, and the Docker shell is configured to use the sudoku-\/solver-\/env. It is runnable by using the single command\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docker\ run\ sudoku-\/solver}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}\hypertarget{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md8}{}\doxysection{\texorpdfstring{Credits}{Credits}}\label{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md8}
+Author\+: Fanyi Wu\hypertarget{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md9}{}\doxysection{\texorpdfstring{Generation Tools}{Generation Tools}}\label{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md9}
+
+\begin{DoxyItemize}
+\item \href{https://code.visualstudio.com/}{\texttt{ VSCode}} -\/ Python IDE for development.
+\item \href{https://git-scm.com/}{\texttt{ Git}} -\/ Version control system for managing code versions and collaboration.
+\item \href{https://www.docker.com/}{\texttt{ Docker}} -\/ Containerization platform for ensuring consistent environments.
+\item \href{https://www.doxygen.nl/index.html}{\texttt{ Doxygen}} -\/ Documentation generator tool used for writing software documentation from annotated source code.
+\item \href{https://github.com/features/copilot}{\texttt{ Copilot}} -\/ Autofill codes and debug for the scripts.
+\end{DoxyItemize}\hypertarget{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md10}{}\doxysection{\texorpdfstring{Chat\+GPT (https\+://www.\+chat.\+openai.\+com/)}{ChatGPT (https://www.chat.openai.com/)}}\label{md__2_users_2kaitlyn_2_d_i_s_2_ising-_machine_2_thesis_2fw385_2_r_e_a_d_m_e_autotoc_md10}
+AI generation tool used to help with developing and embellishing the project.
+
+{\bfseries{Prototyping}}
+
+prompt\+:
+\begin{DoxyItemize}
+\item What are the logics of backtracking and constraint propagation algorithms when solving a Sudoku?
+\end{DoxyItemize}
+
+The results are used to help draft the prototype. Using the logic, the structure of the main solver and the corresponding fundamental modules in src folder ({\ttfamily check\+\_\+input}, {\ttfamily find\+\_\+empty}, {\ttfamily is\+\_\+valid}) were developed.
+
+{\bfseries{Developing}}
+
+prompt\+:
+\begin{DoxyItemize}
+\item For {\ttfamily check\+\_\+input.\+py}, try to reduce the loops used to check for the conditions.
+\end{DoxyItemize}
+
+The result was used to optimise and concise the code. Before the optimisation by Chat\+GPT\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{if\ not\ isinstance(row,\ list):}
+\DoxyCodeLine{\ \ \ \ raise\ ValueError("{}validate\_grid"{})}
+\DoxyCodeLine{}
+\DoxyCodeLine{else:}
+\DoxyCodeLine{\ \ \ \ length\_count\ =\ 0}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ for\ element\ in\ row:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ length\_count\ +=\ 1}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ if\ length\_count\ !=\ 9:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ raise\ ValueError("{}validate\_grid"{})}
+
+\end{DoxyCode}
+ After using Chat\+GPT, the above code condensed to\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{if\ not\ isinstance(row,\ list)\ or\ len(row)\ !=\ 9:}
+\DoxyCodeLine{\ \ \ \ raise\ ValueError("{}validate\_grid"{})}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item For {\ttfamily find\+\_\+empty.\+py}, how to optimise the searching algorithm using cache optimisation?
+\end{DoxyItemize}
+
+The result provided an insight of maintaining a cache of empty cells. This cache is updated whenever a cell in the Sudoku grid is modified. The key idea is to avoid scanning the entire grid every time we need to find an empty cell. This was used to optimise the code in {\ttfamily find\+\_\+empty.\+py}.
+
+
+\begin{DoxyItemize}
+\item Debug the code.
+\end{DoxyItemize}
+
+The result was used to debug the code and make the code more robust.
+
+{\bfseries{Formatting}}
+\begin{DoxyItemize}
+\item For the docstrings, revise for grammar mistakes and make sure they are compatible with Doxygen. Do not change the logic and wording.
+\end{DoxyItemize}
+
+The result was used to clarify and beautify the docstrings.
+
+
+\begin{DoxyItemize}
+\item Give me a general outlines for things to mention in the README file.
+\end{DoxyItemize}
+
+The result was used to structure the README.\+md file for the project. 
