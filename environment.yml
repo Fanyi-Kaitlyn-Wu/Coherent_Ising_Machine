@@ -16,6 +16,7 @@ dependencies:
   - tensorflow>=2.0.0
   - tqdm
   - pytorch
+  - notebook
   - pip
 
 # To fine tune the hyperparameters, we can use the following code
