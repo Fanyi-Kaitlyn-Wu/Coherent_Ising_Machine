@@ -5,8 +5,10 @@ This repository contains a implementation of a simulator of the Coherent Ising M
 
 The Hamiltonian of the Ising model, representing the total energy of the system, is given by:
 
-$$H = - \sum_{i,j} J_{ij} \sigma_i \sigma_j - \sum_i h_i \sigma_i$$
-where $J$ is the $N \times N$ coupling matrix and $h$ is the external field. In this project, no external field is considered. $ \sigma_i \sigma_j$ represent the Ising spin. The project is aimed to reproduce the results of the below papers by integrating the listed algorithms.
+$$
+H = - \sum_{i,j} J_{ij} \sigma_i \sigma_j - \sum_i h_i \sigma_i
+$$
+where $J$ is the $N \times N$ coupling matrix and $h$ is the external field. In this project, no external field is considered. $\sigma_i \sigma_j$ represent the Ising spin. The project is aimed to reproduce the results of the below papers by integrating the listed algorithms.
 
 - Amplitude-Heterogeneity-Correction variant of the CIM algorithm
 "
