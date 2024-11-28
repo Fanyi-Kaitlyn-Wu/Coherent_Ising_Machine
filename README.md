@@ -30,7 +30,7 @@ T. Leleu, Y. Yamamoto, P.L. McMahon, and K. Aihara, Destabilization of local min
 ## Installation
 The project is uploaded in gitLab. To install the application, clone the repository:
 ```bash
-git clone https://gitlab.developers.cam.ac.uk/phy/data-intensive-science-mphil/projects/fw385.git
+git clone https://github.com/Fanyi-Kaitlyn-Wu/Coherent_Ising_Machine.git
 ```
 Navigate to the project directory and install the dependencies.
 
